@@ -212,6 +212,8 @@ class LogStash::Event
     if format.index("%").nil?
       return format
     end
+    #if format.index("=") == 1
+    #  return self[format.gsub
 
     return format.gsub(/%\{[^}]+\}/) do |tok|
       # Take the inside of the %{ ... }
@@ -230,6 +232,12 @@ class LogStash::Event
         org.joda.time.Instant.java_class.constructor(Java::long).new_instance(
           t.tv_sec * 1000 + t.tv_usec / 1000
         ).to_java.toDateTime.toString(formatter)
+      elsif key[0] == "="
+        #Allow us to return a replaced integer
+        key = key[1..-1]
+        number = self[key]
+        return number.to_i
+        
       else
         value = self[key]
         case value
