@@ -212,8 +212,6 @@ class LogStash::Event
     if format.index("%").nil?
       return format
     end
-    #if format.index("=") == 1
-    #  return self[format.gsub
 
     return format.gsub(/%\{[^}]+\}/) do |tok|
       # Take the inside of the %{ ... }
